@@ -1,0 +1,89 @@
+@extends('layouts.app', [
+'namePage' => 'Login page',
+'class' => 'login-page sidebar-mini ',
+'activePage' => 'login',
+'backgroundImage' => '/assets/img/bg14.jpg',
+])
+
+@section('content')
+<div class="content">
+    <div class="container">
+        <div class="col-md-12 ml-auto mr-auto">
+            <div class="header bg-gradient-primary py-10 py-lg-2 pt-lg-12">
+                <div class="container">
+                    <div class="header-body text-center mb-7">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12 col-md-9">
+                                <p class="text-lead text-light mt-3 mb-0">
+                                    @include('alerts.migrations_check')
+                                </p>
+                            </div>
+                            <div class="col-lg-5 col-md-6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 ml-auto mr-auto">
+            <form role="form" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="card card-login card-plain bg-dark">
+                    <div class="card-header text-center">
+                        <div class="logo-container">
+                    <img src=" {{ asset('/assets/img/cmd2.png') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <!-- input username -->
+                        <div class="input-group no-border form-control-lg">
+                            <span class="input-group-prepend">
+                            </span>
+                            <input class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('Username') }}" type="text" name="username" value="" required autofocus>
+                        </div>
+                        @if ($errors->has('username'))
+                        <span class="invalid-feedback" style="display: block;" role="alert">
+                            <strong>{{ $errors->first('username') }}</strong>
+                        </span>
+                        @endif
+                        <!-- input password -->
+                        <div class="input-group no-border form-control-lg">
+                            <div class="input-group-prepend">
+                            </div>
+                            <input id="passwordInput" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="{{ __('Password') }}" type="password" required>
+                        </div>
+                        @if ($errors->has('password'))
+                        <span class="invalid-feedback" style="display: block;" role="alert">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                    <div class="card-footer" style="display: flex; justify-content: center;">
+                        <button type="submit" class="btn btn-primary btn-round btn-lg btn-block mb-3 font-weight-bold" style="background-color: #FFFFFF; color: #0c2646; border-radius: 20px; width: 40%; display: flex; justify-content: center;">{{ __('Login') }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('js')
+
+<script>
+    $(document).ready(function() {
+        demo.checkFullPageBackgroundImage();
+        $('#togglePassword').click(function() {
+            var passwordField = $('#passwordInput');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType == 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('ui-1_eye-17').addClass('ui-1_simple-remove');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('ui-1_simple-remove').addClass('ui-1_eye-17');
+            }
+        });
+    });
+</script>
+@endpush
